@@ -13,15 +13,15 @@ jobs:
 
       - name: Decode and Save Image 1
         run: |
-          echo "${{ github.event.client_payload.image1 }}" | base64 --decode > images/pic.png
+          echo "${{ github.event.client_payload.image1 }}" | base64 --decode > images/1.png
 
       - name: Decode and Save Image 2
         run: |
-          echo "${{ github.event.client_payload.image2 }}" | base64 --decode > images/pic1.png
+          echo "${{ github.event.client_payload.image2 }}" | base64 --decode > images/2.png
 
       - name: Decode and Save Image 3
         run: |
-          echo "${{ github.event.client_payload.image3 }}" | base64 --decode > images/pic2.png
+          echo "${{ github.event.client_payload.image3 }}" | base64 --decode > images/3.png
 
       - name: Save Upload Date
         run: |
