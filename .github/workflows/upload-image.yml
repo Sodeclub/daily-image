@@ -1,31 +1,31 @@
-name: Upload Image Automatically
+name: Upload Image
 
 on:
-  workflow_dispatch:   # ใช้คำสั่งจาก API หรือผู้ใช้
+  workflow_dispatch:
     inputs:
-      file:
-        description: 'Upload Image'
+      image:
+        description: 'Path to the image file'
         required: true
-        default: 'image.png'
+        default: 'C:/Users/screen/Pictures/1.png'
 
 jobs:
   upload-image:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Upload image to GitHub
-      uses: actions/upload-artifact@v2
-      with:
-        name: image
-        path: ./path_to_your_image/image.png  # ต้องเปลี่ยน path ตามที่ไฟล์อยู่
-
-    - name: Commit changes
-      run: |
-        git config --global user.email "youremail@example.com"   # ใส่อีเมล์
-        git config --global user.name "Your Name"                 # ใส่ชื่อของคุณ
-        git add .   
-        git commit -m "Update image"
-        git push
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Upload image to repository
+        run: |
+          # สร้าง directory สำหรับเก็บไฟล์
+          mkdir -p ./images
+          
+          # คัดลอกไฟล์จากเครื่อง (ที่ระบุใน path)
+          cp ${{ github.event.inputs.image }} ./images/
+          
+          # Commit และ push ไฟล์ที่เพิ่มไปยัง GitHub repository
+          git config --global user.name "YourName"
+          git config --global user.email "youremail@example.com"
+          git add ./images/*
+          git commit -m "Add image"
+          git push origin main
